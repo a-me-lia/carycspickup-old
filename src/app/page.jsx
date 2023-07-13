@@ -6,12 +6,16 @@ import signIn from "./firebase/auth/signin";
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import { signInWithRedirect } from "firebase/auth";
+import { useState } from "react";
 import Image from "next/image";
 
 function Page() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const router = useRouter()
+
+    const [state, setState] = useState("IDLE");
+    const [errorMessage, setErrorMessage] = useState(null);
 
     function goToSignUp(){
         router.replace('./signup')
@@ -22,11 +26,16 @@ function Page() {
 
         const { result, error } = await signIn(email, password);
 
+
         if (error) {
+            setErrorMessage(JSON.stringify(error));
+            setState("ERROR");
             return console.log(error)
+
         }
 
         // else successful
+        setState("SUCCESS");
         console.log(result)
         return router.push("/entry")
     }
@@ -46,14 +55,20 @@ function Page() {
 
                     <input className='border-2 py-1 px-2 min-w-[256px]'onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
                 </label>
-            <button type="submit"><div className=" border-2 text-white font-bold text-lg border-amber-200 px-2 py-1.5 w-[256px] rounded-lg bg-amber-400">Sign in</div></button>
+                <button type="submit"><div className=" border-2 text-white font-bold text-lg border-amber-200 px-2 py-1.5 w-[256px] rounded-lg bg-amber-400">Sign in</div></button>
 <div  className='w-48'></div>
 
             </form>
 
 
             <button  className="w-[256px] mt-[-10px] text-right text-[14px]" onClick={goToSignUp}><p>First Time? Create an Account!</p></button>
-
+            <div className="p-4 w-72 break-words">           
+             {state === "ERROR" && (
+        <p className="relative  mt-2 text-red-600">{errorMessage}</p>
+      )}
+      {state === "SUCCESS" && (
+        <p className="relative  mt-2 text-green-600">Success!</p>
+      )}</div>
         </div>
 
 

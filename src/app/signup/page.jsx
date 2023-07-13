@@ -2,6 +2,7 @@
 import React from "react";
 import signUp from "../firebase/auth/signup";
 import { useRouter } from 'next/navigation'
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,6 +10,9 @@ function Page() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
     const router = useRouter()
+
+    const [state, setState] = useState("IDLE");
+    const [errorMessage, setErrorMessage] = useState(null);
 
     function goToSignIn(){
         router.replace('./')
@@ -19,11 +23,16 @@ function Page() {
 
         const { result, error } = await signUp(email, password);
 
-        if (error) {
+
+        if (error) {           
+             setErrorMessage(JSON.stringify(error));
+            setState("ERROR");
             return console.log(error)
+
         }
 
         // else successful
+        setState("SUCCESS");
         console.log(result)
         return router.push("/entry")
     }
@@ -47,6 +56,13 @@ function Page() {
 
         </form>
             <button  className="w-[256px] mt-[-10px] text-right text-[14px]" onClick={goToSignIn}><p>Back to sign in</p></button>
+            <div className="p-4 w-72 break-words">           
+             {state === "ERROR" && (
+        <p className="relative  mt-2 text-red-600">{errorMessage}</p>
+      )}
+      {state === "SUCCESS" && (
+        <p className="relative  mt-2 text-green-600">Success!</p>
+      )}</div>
     </div>
 
 
