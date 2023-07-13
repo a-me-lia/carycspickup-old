@@ -15,9 +15,9 @@ export default function RootLayout({ children }) {
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>
+      <body className={inter.className}>
         <AuthContextProvider>
-          <body className={inter.className}>{children}</body>
+          {children}
         </AuthContextProvider>
       </body>
     </html>

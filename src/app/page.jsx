@@ -2,7 +2,7 @@
 
 'use client'
 import React from "react";
-import signIn from "./firebase/auth/signin";
+import signIn from "./api/firebase/auth/signin";
 import { useRouter } from 'next/navigation'
 import Link from "next/link";
 import { signInWithRedirect } from "firebase/auth";

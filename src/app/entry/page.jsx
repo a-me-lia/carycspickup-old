@@ -4,7 +4,7 @@ import { useAuthContext } from "../context/authcontext";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import addData from "../firestore/adddata";
+import addData from "../api/firestore/adddata";
 
 
 function Page() {
@@ -15,13 +15,7 @@ function Page() {
     const [state, setState] = useState("IDLE");
     const [errorMessage, setErrorMessage] = useState(null);
 
-    const currentDate = new Date();
-
-const currentDayOfMonth = currentDate.getDate();
-const currentMonth = currentDate.getMonth(); // Be careful! January is 0, not 1
-const currentYear = currentDate.getFullYear();
-
-const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
+ 
 
 
     function goToSignIn(){
@@ -31,11 +25,10 @@ const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentY
     const handleForm = async (event) => {
         event.preventDefault()
         const data = {
-            name: name,
-            date: dateString
+            name: name
          };
 
-        const { result, error } = await addData(dateString, data);
+        const { result, error } = await addData(data);
 
         if (error) {
             setErrorMessage(JSON.stringify(error));
@@ -46,7 +39,7 @@ const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentY
 
         // else successful
         setState("SUCCESS");
-        console.log(result)
+        console.log(result);
         return router.push("/entry")
     }
 
