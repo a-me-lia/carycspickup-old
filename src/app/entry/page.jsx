@@ -24,8 +24,8 @@ const currentYear = currentDate.getFullYear();
 const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentYear;
 
 
-    function goToSignUp(){
-        router.replace('./signup')
+    function goToSignIn(){
+        router.replace('/')
     }
 
     const handleForm = async (event) => {
@@ -69,6 +69,7 @@ const dateString = currentDayOfMonth + "-" + (currentMonth + 1) + "-" + currentY
                 </label>
                 <button type="submit"><div className=" border-2 text-white font-bold text-lg border-purple-200 px-2 py-1.5 w-[256px] rounded-lg bg-purple-400">Submit</div></button>
 <div  className='w-48'></div>
+<button  className="w-[256px] mt-[-10px] text-right text-[14px]" onClick={goToSignIn}><p>Back to login</p></button>
 
             </form>
             <div className="p-4 w-72 break-words">           

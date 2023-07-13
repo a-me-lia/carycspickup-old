@@ -7,7 +7,7 @@ export default async function addData(collection, data) {
     let error = null;
 
     try {
-        result = await setDoc(doc(db, collection), data, {
+        result = await setDoc(doc(db, collection, 0), data, {
             merge: true,
         });
     } catch (e) {
